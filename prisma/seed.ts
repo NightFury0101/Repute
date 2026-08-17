@@ -1,5 +1,6 @@
 import "dotenv/config";
 import bcrypt from "bcryptjs";
+import { randomBytes } from "crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
 
@@ -958,7 +959,39 @@ const PRODUCTS: ProductSeed[] = [
   },
 ];
 
+function requireEnv(name: string): string {
+  const value = process.env[name];
+  if (!value) {
+    throw new Error(
+      `Refusing to seed: missing required env var ${name}. ` +
+        `Set it in .env to a password of your choosing before running the seed — ` +
+        `there is no built-in default admin/customer password.`
+    );
+  }
+  return value;
+}
+
 async function main() {
+  // Validate seed credentials BEFORE touching the database at all — a bad
+  // config must fail fast, not wipe existing data and then error out partway
+  // through re-seeding it.
+  const adminEmail = requireEnv("ADMIN_SEED_EMAIL");
+  const adminPassword = requireEnv("ADMIN_SEED_PASSWORD");
+  const customerEmail = requireEnv("CUSTOMER_SEED_EMAIL");
+  const customerPassword = requireEnv("CUSTOMER_SEED_PASSWORD");
+  if (adminPassword.length < 8 || customerPassword.length < 8) {
+    throw new Error("ADMIN_SEED_PASSWORD and CUSTOMER_SEED_PASSWORD must be at least 8 characters.");
+  }
+  if (adminPassword === "change-me-before-seeding" || customerPassword === "change-me-before-seeding") {
+    throw new Error(
+      "ADMIN_SEED_PASSWORD / CUSTOMER_SEED_PASSWORD are still set to the .env.example placeholder. " +
+        "Choose real passwords before seeding."
+    );
+  }
+  if (adminPassword === customerPassword) {
+    throw new Error("ADMIN_SEED_PASSWORD and CUSTOMER_SEED_PASSWORD must be different.");
+  }
+
   console.log("Seeding database…");
 
   // Clear existing data (dependency-safe order)
@@ -1106,35 +1139,37 @@ async function main() {
     }
   }
 
-  // Users
-  const adminPasswordHash = await bcrypt.hash(process.env.ADMIN_SEED_PASSWORD || "MaldibayAdmin!2026", 12);
+  // Users (credentials already validated at the top of main())
+  const adminPasswordHash = await bcrypt.hash(adminPassword, 12);
   await prisma.user.create({
     data: {
       name: "Maldibay Admin",
-      email: (process.env.ADMIN_SEED_EMAIL || "admin@maldibay.com").toLowerCase(),
+      email: adminEmail.toLowerCase(),
       passwordHash: adminPasswordHash,
       role: "ADMIN",
     },
   });
 
-  const customerPasswordHash = await bcrypt.hash(process.env.CUSTOMER_SEED_PASSWORD || "MaldibayShop!2026", 12);
+  const customerPasswordHash = await bcrypt.hash(customerPassword, 12);
   const customer = await prisma.user.create({
     data: {
       name: "Amina Rasheed",
-      email: (process.env.CUSTOMER_SEED_EMAIL || "customer@maldibay.com").toLowerCase(),
+      email: customerEmail.toLowerCase(),
       passwordHash: customerPasswordHash,
       role: "CUSTOMER",
       phone: "+960 777-1234",
     },
   });
 
+  // Extra demo customers only exist to author reviews/order history — they're
+  // not meant to be logged into, so each gets its own random, unpublished password.
   const extraCustomers = await Promise.all(
     ["Sara Khan", "Leila Hassan", "Noor Fathimath", "Zayn Ahmed"].map(async (name, i) =>
       prisma.user.create({
         data: {
           name,
           email: `${slugify(name)}@example.com`,
-          passwordHash: await bcrypt.hash("Password!2026", 12),
+          passwordHash: await bcrypt.hash(randomBytes(24).toString("base64url"), 12),
           role: "CUSTOMER",
           createdAt: new Date(Date.now() - (i + 1) * 12 * 24 * 60 * 60 * 1000),
         },
@@ -1348,8 +1383,8 @@ async function main() {
   });
 
   console.log(`Seeded ${createdProducts.length} products across ${CATEGORIES.length} categories.`);
-  console.log(`Admin login: ${process.env.ADMIN_SEED_EMAIL || "admin@maldibay.com"}`);
-  console.log(`Customer login: ${process.env.CUSTOMER_SEED_EMAIL || "customer@maldibay.com"}`);
+  console.log(`Admin login: ${adminEmail}`);
+  console.log(`Customer login: ${customerEmail}`);
 }
 
 main()

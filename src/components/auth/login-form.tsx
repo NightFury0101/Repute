@@ -73,9 +73,12 @@ export function LoginForm({ callbackUrl = "/account" }: { callbackUrl?: string }
         </Link>
       </p>
 
-      <div className="rounded-xl bg-ivory p-4 text-xs text-ink-mute leading-relaxed">
-        Demo account — <strong>customer@maldibay.com</strong> / <strong>MaldibayShop!2026</strong>
-      </div>
+      {process.env.NEXT_PUBLIC_SHOW_DEMO_HINTS === "true" && (
+        <div className="rounded-xl bg-ivory p-4 text-xs text-ink-mute leading-relaxed">
+          Demo account — sign in with the email in <code>CUSTOMER_SEED_EMAIL</code> and the
+          password you set in <code>CUSTOMER_SEED_PASSWORD</code> when you seeded the database.
+        </div>
+      )}
     </form>
   );
 }

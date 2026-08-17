@@ -37,8 +37,11 @@ cp .env.example .env
 
 Open `.env` and:
 - Generate a real secret for `AUTH_SECRET`: `openssl rand -base64 32`
-- Optionally change the seed admin/customer email + password (`ADMIN_SEED_*`, `CUSTOMER_SEED_*`)
-  before you seed — these are only used once, to create the initial accounts.
+- Set `ADMIN_SEED_PASSWORD` and `CUSTOMER_SEED_PASSWORD` to passwords **you** choose (8+
+  characters, and the two must differ). **There is no built-in default password** — the seed
+  script refuses to run if these are unset, too short, identical to each other, or still the
+  `change-me-before-seeding` placeholder from `.env.example`. This is intentional: it's the
+  guardrail that stops a real deployment from ever getting a publicly-known admin password.
 
 Then create the database and load the demo catalog:
 
@@ -52,15 +55,25 @@ Visit **http://localhost:3000**.
 
 ### Demo accounts
 
-| Role     | Email                    | Password              |
-|----------|---------------------------|------------------------|
-| Admin    | `admin@maldibay.com`      | `MaldibayAdmin!2026`   |
-| Customer | `customer@maldibay.com`   | `MaldibayShop!2026`    |
+The seed script creates exactly two accounts you can sign in with, using the email/password
+*you* set in `.env`:
+
+| Role     | Email               | Password                    |
+|----------|----------------------|-------------------------------|
+| Admin    | `ADMIN_SEED_EMAIL`   | whatever you set in `ADMIN_SEED_PASSWORD`  |
+| Customer | `CUSTOMER_SEED_EMAIL`| whatever you set in `CUSTOMER_SEED_PASSWORD` |
 
 Admin dashboard: **http://localhost:3000/admin/login**
 
-Change these before deploying anywhere public — re-seeding after editing `.env` will recreate
-the accounts with your new password.
+Re-seeding after editing `.env` recreates these two accounts with whatever email/password are
+currently set. The four other demo customers in the seed data (used only to author sample
+reviews/orders) each get a random, never-displayed password and are not meant to be signed
+into.
+
+If you want the login screens to remind you which env var holds the password (handy while
+developing), set `NEXT_PUBLIC_SHOW_DEMO_HINTS="true"` in `.env`. Leave it unset — the default —
+anywhere the app might be reachable by someone other than you; it never prints an actual
+password, but there's no reason to advertise the account emails either.
 
 ## Scripts
 
@@ -163,4 +176,13 @@ run start`):
 - **Admin journey**: Admin login → Dashboard → Add Product (with images, pricing, stock) →
   Publish → product appears on the storefront immediately → Edit product / change price → price
   updates live → Delete product → removed from storefront.
+- Registration/login/logout, duplicate-email and wrong-password handling.
+- Shop/category filtering, sorting, variant selection, search (including empty-result states).
+- Checkout field validation (invalid email, missing address fields block advancing), inventory
+  deduction on order placement, and promo code redemption.
+- Admin auth boundaries: unauthenticated and customer-role sessions cannot reach any `/admin/*`
+  route (enforced both by `src/proxy.ts` and by `requireAdmin()` in every admin server action).
+- Admin product CRUD with image upload, live inventory editing, order status/tracking updates,
+  discount code management, review moderation, and homepage CMS — all verified to publish
+  instantly to the storefront with no rebuild.
 - Production build (`npm run build`) passes with no TypeScript errors; `npm run lint` is clean.

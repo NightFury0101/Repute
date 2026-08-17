@@ -47,10 +47,12 @@ export function AdminLoginForm({ callbackUrl = "/admin" }: { callbackUrl?: strin
       <Button type="submit" size="lg" disabled={loading} className="mt-2">
         {loading ? "Signing In…" : "Sign In to Dashboard"}
       </Button>
-      <div className="rounded-xl bg-warm-white/5 border border-warm-white/10 p-4 text-xs text-warm-white/50 leading-relaxed">
-        Demo admin — <strong className="text-warm-white/70">admin@maldibay.com</strong> /{" "}
-        <strong className="text-warm-white/70">MaldibayAdmin!2026</strong>
-      </div>
+      {process.env.NEXT_PUBLIC_SHOW_DEMO_HINTS === "true" && (
+        <div className="rounded-xl bg-warm-white/5 border border-warm-white/10 p-4 text-xs text-warm-white/50 leading-relaxed">
+          Demo admin — sign in with the email in <code>ADMIN_SEED_EMAIL</code> and the password
+          you set in <code>ADMIN_SEED_PASSWORD</code> when you seeded the database.
+        </div>
+      )}
     </form>
   );
 }

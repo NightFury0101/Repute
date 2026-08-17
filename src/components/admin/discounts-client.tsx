@@ -57,7 +57,12 @@ export function DiscountsClient({ discounts, categories }: { discounts: Discount
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     startTransition(async () => {
-      const result = await saveDiscount({ id: editing?.id, ...form });
+      const result = await saveDiscount({
+        id: editing?.id,
+        ...form,
+        minSubtotal: form.minSubtotal || null,
+        usageLimit: form.usageLimit || null,
+      });
       if (result.success) {
         toast.success(editing ? "Discount updated" : "Discount created");
         setOpen(false);
