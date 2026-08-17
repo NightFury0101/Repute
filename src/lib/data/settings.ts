@@ -16,11 +16,11 @@ export interface HomepageSettings {
 }
 
 export const DEFAULT_HOMEPAGE_SETTINGS: HomepageSettings = {
-  heroTitle: "Beauty, Considered.",
+  heroTitle: "Glow that feels\nnaturally yours.",
   heroSubtitle:
-    "Thoughtfully formulated makeup, skincare and fragrance — made to become part of your everyday ritual.",
-  heroImage: "/generated/hero/home-hero.jpg",
-  heroCtaLabel: "Shop Now",
+    "Lightweight skincare designed to leave your skin calm, luminous, and hydrated.",
+  heroImage: "/generated/hero/hero-product-cutout.png",
+  heroCtaLabel: "Shop the Collection",
   heroCtaLink: "/shop",
   heroCtaLabel2: "Explore Collection",
   heroCtaLink2: "/shop?collection=featured",

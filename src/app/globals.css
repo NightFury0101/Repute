@@ -179,6 +179,113 @@ body {
   scrollbar-width: none;
 }
 
+/* Homepage hero — animated gradient shell, drifting orbs, grain, floating
+   product cutout with pointer parallax. Durations are deliberately slow
+   (6–20s) so the page reads as calm, not busy; prefers-reduced-motion
+   collapses all of it via the global rule below. */
+.hero-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 75% 35%, rgba(255, 253, 251, 0.75), transparent 45%),
+    linear-gradient(120deg, var(--color-ivory), var(--color-blush), var(--color-cream), var(--color-ivory));
+  background-size: 200% 200%;
+  animation: hero-bg-shift 20s ease-in-out infinite alternate;
+}
+
+.hero-orb {
+  position: absolute;
+  z-index: -1;
+  border-radius: 9999px;
+  filter: blur(2px);
+}
+.hero-orb-one {
+  top: 8%;
+  right: 6%;
+  width: 260px;
+  height: 260px;
+  background: var(--color-blush-deep);
+  opacity: 0.5;
+  animation: hero-drift-one 14s ease-in-out infinite alternate;
+}
+.hero-orb-two {
+  bottom: 6%;
+  left: 42%;
+  width: 180px;
+  height: 180px;
+  background: var(--color-rose-gold);
+  opacity: 0.35;
+  animation: hero-drift-two 12s ease-in-out infinite alternate;
+}
+
+.hero-grain {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.hero-product-wrap {
+  transform: translate3d(var(--mouse-x, 0px), var(--mouse-y, 0px), 0);
+  transition: transform 0.4s ease-out;
+}
+
+.hero-product-glow {
+  animation: hero-glow-pulse 6s ease-in-out infinite alternate;
+}
+
+.hero-product-float {
+  animation: hero-product-float 6s ease-in-out infinite;
+}
+
+@keyframes hero-bg-shift {
+  from {
+    background-position: 0% 50%;
+  }
+  to {
+    background-position: 100% 50%;
+  }
+}
+@keyframes hero-drift-one {
+  from {
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    transform: translate(-40px, 26px) scale(1.12);
+  }
+}
+@keyframes hero-drift-two {
+  from {
+    transform: translate(0, 0);
+  }
+  to {
+    transform: translate(30px, -22px);
+  }
+}
+@keyframes hero-glow-pulse {
+  from {
+    transform: scale(0.92);
+    opacity: 0.45;
+  }
+  to {
+    transform: scale(1.06);
+    opacity: 0.8;
+  }
+}
+@keyframes hero-product-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(2deg);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

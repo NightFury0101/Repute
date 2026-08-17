@@ -38,11 +38,17 @@ export function HomepageSettingsForm({ settings }: { settings: HomepageSettings 
       <section className="rounded-2xl border border-line bg-warm-white p-6 sm:p-8 flex flex-col gap-5">
         <h3 className="font-serif text-xl text-ink">Hero Section</h3>
         <div className="flex flex-col gap-1.5">
-          <Label>Hero Image</Label>
+          <Label>Hero Product Image</Label>
+          <p className="text-xs text-ink-mute">
+            The hero floats this as a product cutout — a transparent PNG works best.
+          </p>
           <ImageUploader images={heroImage} onChange={(imgs) => setHeroImage(imgs.slice(-1))} max={1} />
         </div>
         <div className="flex flex-col gap-1.5">
           <Label>Title</Label>
+          <p className="text-xs text-ink-mute">
+            Start a new line before the last phrase to highlight it in the accent color.
+          </p>
           <Input value={form.heroTitle} onChange={(e) => set("heroTitle", e.target.value)} />
         </div>
         <div className="flex flex-col gap-1.5">

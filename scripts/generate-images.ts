@@ -569,6 +569,11 @@ async function renderJpeg(svg: string, outPath: string, quality = 84) {
   await sharp(Buffer.from(svg)).jpeg({ quality }).toFile(outPath);
 }
 
+async function renderPng(svg: string, outPath: string) {
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
+  await sharp(Buffer.from(svg)).png().toFile(outPath);
+}
+
 // ---------------------------------------------------------------------------
 // Scene composers
 // ---------------------------------------------------------------------------
@@ -615,6 +620,31 @@ async function genHomeHero() {
 
   const svg = svgDocument(w, h, defs, body);
   await renderJpeg(svg, path.join(OUT, "hero", "home-hero.jpg"));
+}
+
+/**
+ * Standalone transparent-background product cutout for the new animated
+ * homepage hero (floating bottle + CSS glow, no rectangular photo frame).
+ */
+async function genHeroProductCutout() {
+  const w = 900;
+  const h = 1100;
+  const defs: string[] = [];
+  const body: string[] = [];
+
+  const cx = w / 2;
+  const footY = h - 80;
+
+  const sh = dropShadow(cx, footY + 10, 150, 26, COLOR.ink, 0.16);
+  defs.push(sh.defs);
+  body.push(sh.markup);
+
+  const bottle = dropperBottle(COLOR.warmWhite, COLOR.blushDeep, COLOR.roseGoldDark, COLOR.roseGold);
+  defs.push(bottle.defs);
+  body.push(place(cx, footY, 2.7, -2, bottle));
+
+  const svg = svgDocument(w, h, defs, body);
+  await renderPng(svg, path.join(OUT, "hero", "hero-product-cutout.png"));
 }
 
 async function genPromoRitual() {
@@ -1059,6 +1089,7 @@ async function main() {
 
   console.log("Generating hero images...");
   await genHomeHero();
+  await genHeroProductCutout();
   await genPromoRitual();
   await genFeaturedCollection();
   await genAboutHero();
