@@ -1,4 +1,4 @@
-import { Hero } from "@/components/home/hero";
+import { ScrollStory } from "@/components/home/scroll-story";
 import { CategoryGrid } from "@/components/home/category-grid";
 import { ProductRail } from "@/components/home/product-rail";
 import { PromoBanner } from "@/components/home/promo-banner";
@@ -32,7 +32,7 @@ export default async function HomePage() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-      <Hero settings={settings} />
+      <ScrollStory />
       <CategoryGrid categories={categories} />
       <ProductRail
         eyebrow="Customer Favorites"
