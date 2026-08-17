@@ -1,17 +1,8 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
-      "settings": {
-        "eyebrow": "New Formula · Daily Ritual",
-        "title_line1": "Glow that feels",
-        "title_line2": "naturally yours.",
-        "subtitle": "Lightweight skincare designed to leave your skin calm, luminous, and hydrated.",
-        "cta_label": "Shop the Collection",
-        "cta_url": "/collections/all",
-        "secondary_label": "Explore Collection",
-        "secondary_url": "/collections/all"
-      }
+      "type": "scroll-story",
+      "settings": {}
     },
     "categories": {
       "type": "category-grid",

@@ -1,0 +1,125 @@
+{%- comment -%}
+  Pinned three-chapter scroll cinema hero. Position/opacity are computed in
+  theme.js (initScrollStory) from scroll progress across .story-stage;
+  this section only renders the structure and static content.
+{%- endcomment -%}
+
+<section class="scroll-story" data-scroll-story>
+  <section class="story-stage" data-story-stage aria-label="{{ shop.name }} ritual story">
+    <div class="story-sticky" data-story-sticky>
+      <div class="story-backgrounds" aria-hidden="true">
+        <div class="story-background story-background--first" data-story-background="0">
+          <img src="{{ 'scroll-firstlight.jpg' | asset_url }}" alt="" width="2200" height="1238" loading="eager" fetchpriority="high">
+        </div>
+        <div class="story-background" data-story-background="1">
+          <img src="{{ 'scroll-hydration.jpg' | asset_url }}" alt="" width="2200" height="1238" loading="lazy">
+        </div>
+        <div class="story-background" data-story-background="2">
+          <img src="{{ 'scroll-night-ritual.jpg' | asset_url }}" alt="" width="2200" height="1238" loading="lazy">
+        </div>
+      </div>
+      <div class="story-grain" aria-hidden="true"></div>
+
+      <div class="story-mark" data-story-mark>
+        <img src="{{ 'symbol.png' | asset_url }}" alt="" width="32" height="32">
+        <div>
+          <span>{{ shop.name }}</span>
+          <small>{{ section.settings.mark_tagline }}</small>
+        </div>
+      </div>
+
+      <div class="story-rail" aria-label="Story progress">
+        <span>Scroll to unfold</span>
+        <div class="story-rail-stems" aria-hidden="true">
+          <i data-story-rail="0"></i>
+          <i data-story-rail="1"></i>
+          <i data-story-rail="2"></i>
+        </div>
+        <span class="story-rail-count">01 — 03</span>
+      </div>
+
+      <div class="story-index story-index-one" data-story-index="0" aria-hidden="true">01</div>
+      <div class="story-index story-index-two" data-story-index="1" aria-hidden="true">02</div>
+      <div class="story-index story-index-three" data-story-index="2" aria-hidden="true">03</div>
+
+      <article class="story-copy story-copy--left" data-story-copy="0" aria-live="polite">
+        <p class="story-eyebrow"><span>01</span>{{ section.settings.chapter1_label }}</p>
+        <h2>{{ section.settings.chapter1_title_line1 }}<br><em>{{ section.settings.chapter1_title_line2 }}</em></h2>
+        <p class="story-body">{{ section.settings.chapter1_body }}</p>
+        <a class="story-link" href="{{ section.settings.chapter1_url }}">{{ section.settings.chapter1_action }} →</a>
+      </article>
+
+      <article class="story-copy story-copy--right" data-story-copy="1" aria-live="polite">
+        <p class="story-eyebrow"><span>02</span>{{ section.settings.chapter2_label }}</p>
+        <h2>{{ section.settings.chapter2_title_line1 }}<br><em>{{ section.settings.chapter2_title_line2 }}</em></h2>
+        <p class="story-body">{{ section.settings.chapter2_body }}</p>
+        <a class="story-link" href="{{ section.settings.chapter2_url }}">{{ section.settings.chapter2_action }} →</a>
+      </article>
+
+      <article class="story-copy story-copy--left story-copy--on-dark" data-story-copy="2" aria-live="polite">
+        <p class="story-eyebrow"><span>03</span>{{ section.settings.chapter3_label }}</p>
+        <h2>{{ section.settings.chapter3_title_line1 }}<br><em>{{ section.settings.chapter3_title_line2 }}</em></h2>
+        <p class="story-body">{{ section.settings.chapter3_body }}</p>
+        <a class="story-link" href="{{ section.settings.chapter3_url }}">{{ section.settings.chapter3_action }} →</a>
+      </article>
+
+      <figure class="story-product" data-story-product>
+        <div class="story-product-halo" aria-hidden="true"></div>
+        {%- if section.settings.product_image -%}
+          <img
+            src="{{ section.settings.product_image | image_url: width: 800 }}"
+            alt="{{ section.settings.product_caption }}"
+            width="{{ section.settings.product_image.width }}"
+            height="{{ section.settings.product_image.height }}"
+            loading="eager"
+            fetchpriority="high"
+          >
+        {%- else -%}
+          <img src="{{ 'scroll-product-cutout.png' | asset_url }}" alt="{{ section.settings.product_caption }}" width="1100" height="1650" loading="eager" fetchpriority="high">
+        {%- endif -%}
+        <figcaption class="story-caption">{{ section.settings.product_caption }}</figcaption>
+      </figure>
+
+      <div class="story-cue" data-story-cue aria-hidden="true">
+        <span>Follow the ritual</span>
+        ↓
+      </div>
+    </div>
+  </section>
+</section>
+
+{% schema %}
+{
+  "name": "Scroll story",
+  "settings": [
+    { "type": "text", "id": "mark_tagline", "label": "Wordmark tagline", "default": "Ritual, considered" },
+    { "type": "image_picker", "id": "product_image", "label": "Product image (transparent PNG recommended)" },
+    { "type": "text", "id": "product_caption", "label": "Product caption", "default": "Daily luminous serum — 30 ml" },
+
+    { "type": "header", "content": "Chapter 1 — First light" },
+    { "type": "text", "id": "chapter1_label", "label": "Label", "default": "First light" },
+    { "type": "text", "id": "chapter1_title_line1", "label": "Title line 1", "default": "Let the light" },
+    { "type": "text", "id": "chapter1_title_line2", "label": "Title line 2 (accent)", "default": "find your skin." },
+    { "type": "textarea", "id": "chapter1_body", "label": "Body", "default": "A dawn-weight serum that turns the first step of your routine into a quiet, luminous reset." },
+    { "type": "text", "id": "chapter1_action", "label": "Link label", "default": "Discover the Ritual" },
+    { "type": "url", "id": "chapter1_url", "label": "Link" },
+
+    { "type": "header", "content": "Chapter 2 — Cellular hydration" },
+    { "type": "text", "id": "chapter2_label", "label": "Label", "default": "Cellular hydration" },
+    { "type": "text", "id": "chapter2_title_line1", "label": "Title line 1", "default": "Water, held" },
+    { "type": "text", "id": "chapter2_title_line2", "label": "Title line 2 (accent)", "default": "closer." },
+    { "type": "textarea", "id": "chapter2_body", "label": "Body", "default": "Cushioning, multi-weight hydration softens the surface while skin feels calm, replenished, and awake." },
+    { "type": "text", "id": "chapter2_action", "label": "Link label", "default": "Explore the Formula" },
+    { "type": "url", "id": "chapter2_url", "label": "Link" },
+
+    { "type": "header", "content": "Chapter 3 — Night ritual" },
+    { "type": "text", "id": "chapter3_label", "label": "Label", "default": "Night ritual" },
+    { "type": "text", "id": "chapter3_title_line1", "label": "Title line 1", "default": "Turn down the day." },
+    { "type": "text", "id": "chapter3_title_line2", "label": "Title line 2 (accent)", "default": "Keep the glow." },
+    { "type": "textarea", "id": "chapter3_body", "label": "Body", "default": "Silk-soft botanicals and restorative lipids settle into an unhurried evening ritual — made to be returned to." },
+    { "type": "text", "id": "chapter3_action", "label": "Link label", "default": "Begin Your Reset" },
+    { "type": "url", "id": "chapter3_url", "label": "Link" }
+  ],
+  "presets": [{ "name": "Scroll story" }]
+}
+{% endschema %}
