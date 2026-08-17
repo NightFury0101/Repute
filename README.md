@@ -1,36 +1,166 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Maldibay — Premium Beauty E-Commerce
 
-## Getting Started
+A full-stack, production-architected e-commerce platform for a premium cosmetics and beauty
+brand — storefront, customer accounts and a complete no-code admin dashboard, all backed by a
+real database.
 
-First, run the development server:
+Built with **Next.js 16** (App Router, Turbopack), **TypeScript**, **Prisma** (SQLite by
+default, swappable to PostgreSQL/MySQL), **Auth.js (NextAuth v5)**, **Tailwind CSS v4**, and
+**Zustand**.
+
+## What's included
+
+- **Storefront**: Home, Shop (filters + sort), Categories, Search, Product detail (gallery,
+  variants, reviews, related products, frequently-bought-together), Cart, Wishlist, multi-step
+  Checkout, Order confirmation, Customer account (profile, orders + tracking, addresses,
+  wishlist, recently viewed, settings), About, Contact, FAQ, Shipping & Returns, Privacy
+  Policy, Terms.
+- **Admin dashboard** (`/admin`, separate auth, role-protected): analytics with charts,
+  full product/category/brand/inventory CRUD with image upload, order management with status
+  tracking, customer management, promo code/discount management, review moderation, and a
+  homepage CMS (hero, banners, featured products) — no code changes required to run the store.
+- **Realistic seed data**: 6 categories, 11 fictional brands, 48 products with variants
+  (shades/sizes), 168 reviews, discount codes, demo orders and a demo admin + customer account.
+- Generated, brand-consistent placeholder photography (see [Placeholder imagery](#placeholder-imagery)).
+
+## Requirements
+
+- Node.js 20.9+ (Node 22 recommended)
+- npm
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+cp .env.example .env
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `.env` and:
+- Generate a real secret for `AUTH_SECRET`: `openssl rand -base64 32`
+- Optionally change the seed admin/customer email + password (`ADMIN_SEED_*`, `CUSTOMER_SEED_*`)
+  before you seed — these are only used once, to create the initial accounts.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Then create the database and load the demo catalog:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npx prisma migrate dev --name init   # creates dev.db and applies the schema
+npm run db:seed                      # populates categories, brands, products, demo orders, etc.
+npm run dev
+```
 
-## Learn More
+Visit **http://localhost:3000**.
 
-To learn more about Next.js, take a look at the following resources:
+### Demo accounts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Role     | Email                    | Password              |
+|----------|---------------------------|------------------------|
+| Admin    | `admin@maldibay.com`      | `MaldibayAdmin!2026`   |
+| Customer | `customer@maldibay.com`   | `MaldibayShop!2026`    |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Admin dashboard: **http://localhost:3000/admin/login**
 
-## Deploy on Vercel
+Change these before deploying anywhere public — re-seeding after editing `.env` will recreate
+the accounts with your new password.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Scripts
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev        # start the dev server (Turbopack)
+npm run build      # production build (also type-checks the whole app)
+npm run start      # run the production build
+npm run lint       # ESLint
+npm run db:seed    # reset & repopulate the database with demo data
+npx prisma studio  # browse/edit the database visually
+```
+
+## Architecture
+
+```
+src/
+  app/
+    (storefront)/    # all customer-facing routes, share the storefront header/footer/cart drawer
+    admin/            # admin dashboard — separate layout, separate auth guard
+      (dashboard)/    # everything behind the admin sidebar
+      login/          # admin sign-in (outside the sidebar layout)
+    api/              # file upload + NextAuth route handlers
+  components/
+    ui/               # design-system primitives (Button, Input, Sheet, Modal, Tabs, ...)
+    layout/, cart/, product/, shop/, checkout/, account/, admin/, home/, search/
+  lib/
+    data/             # read-only Prisma queries, organized by domain
+    actions/          # "use server" mutations (cart/checkout/reviews/admin CRUD/...)
+    auth.ts           # Auth.js configuration
+    validations.ts    # zod schemas shared by client forms and server actions
+  store/              # Zustand client state (cart, wishlist hydration, recently viewed, search)
+  generated/prisma/   # generated Prisma client (git-ignored, regenerated on install)
+prisma/
+  schema.prisma       # full data model
+  seed.ts             # demo data
+```
+
+**Data flow**: nothing is hardcoded. Products, categories, brands, orders, customers, reviews,
+discounts and homepage content all live in the database and are read via `src/lib/data/*`.
+Every admin mutation goes through a server action in `src/lib/actions/*`, which calls
+`requireAdmin()` before touching the database — publishing a product, changing a price, or
+updating an order status shows up on the storefront immediately (no rebuild/redeploy needed).
+
+**Auth**: a single `User` table with a `role` column (`CUSTOMER` | `ADMIN`) and a
+`status` column (`ACTIVE` | `DISABLED`) backs both customer and admin sign-in via
+Auth.js Credentials + bcrypt password hashing. `src/proxy.ts` (Next 16's middleware) blocks
+`/account/*` for anyone unauthenticated and `/admin/*` for anyone who isn't an `ADMIN`,
+redirecting to the appropriate sign-in page. Admin credentials/secrets are never exposed to the
+client — all checks happen server-side.
+
+**Cart**: kept client-side (Zustand + localStorage) for a fast, offline-friendly shopping
+experience that works for guests; at checkout the cart contents are re-validated against the
+database (current price, stock, product availability) before an order is created, so nothing
+about pricing is ever trusted from the client. Wishlist and recently-viewed are account-backed
+(persist across devices) for signed-in users.
+
+**Checkout / payments**: the checkout flow collects customer info, shipping address, delivery
+method and payment method (Cash on Delivery, Bank Transfer, or Card), and creates a real `Order`
++ `OrderItem` record with inventory deduction, all in a single DB transaction. **No payment
+processing is implemented** — selecting "Card" simply notes that a payment provider isn't wired
+up yet. To go live, add your provider's SDK (e.g. Stripe) inside the payment step in
+`src/components/checkout/checkout-flow.tsx` and the `placeOrder` action in
+`src/lib/actions/orders.ts`, gated behind `paymentStatus`.
+
+## Switching to PostgreSQL / MySQL for production
+
+The app ships on SQLite so it runs with zero external services. To move to Postgres:
+
+1. In `prisma/schema.prisma`, change the datasource `provider` to `"postgresql"`.
+2. Install the driver adapter: `npm install @prisma/adapter-pg pg`.
+3. In `src/lib/db.ts` and `prisma/seed.ts`, swap `PrismaBetterSqlite3` for `PrismaPg` from
+   `@prisma/adapter-pg` (same constructor shape — pass `{ connectionString: process.env.DATABASE_URL }`).
+4. Set `DATABASE_URL` to your Postgres connection string.
+5. Run `npx prisma migrate dev`.
+
+## Image uploads
+
+Admin-uploaded images (product photos, category/brand images, banners) are written to
+`public/uploads/` via `/api/admin/upload` (admin-only) and `/api/upload` (signed-in customers,
+used for review photos). For a multi-instance/production deployment, swap these routes to
+upload to S3/Cloudinary/R2 instead of local disk — the API surface (accepts `FormData`, returns
+`{ url }`) is designed to make that a drop-in change.
+
+## Placeholder imagery
+
+This build ships with **generated, non-photographic placeholder imagery** (soft-gradient
+studio backdrops with minimalist bottle/jar/tube silhouettes, produced programmatically by
+`scripts/generate-images.ts`) instead of real product photography, since no licensed photo
+assets were available. It's intentionally styled to match the brand's editorial aesthetic
+rather than look like a generic placeholder. Swap in real photography by uploading through the
+admin Products page — new images replace these immediately, per-product.
+
+## Testing notes
+
+The full flows below were manually verified against a production build (`npm run build && npm
+run start`):
+
+- **Customer journey**: Homepage → Shop → Product → Add to Cart → Cart → Checkout (all 5 steps)
+  → Order confirmation, with the order appearing in the customer's Account → Orders.
+- **Admin journey**: Admin login → Dashboard → Add Product (with images, pricing, stock) →
+  Publish → product appears on the storefront immediately → Edit product / change price → price
+  updates live → Delete product → removed from storefront.
+- Production build (`npm run build`) passes with no TypeScript errors; `npm run lint` is clean.
