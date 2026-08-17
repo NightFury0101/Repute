@@ -1,0 +1,27 @@
+<div class="container section-padding">
+  <div style="text-align:center;margin-bottom:40px;">
+    <span class="eyebrow">Every Category</span>
+    <h1 class="section-title">Shop by Collection</h1>
+  </div>
+  <div class="category-grid" style="grid-template-columns:repeat(2,1fr);">
+    {%- for collection in collections -%}
+      {%- unless collection.handle == 'frontpage' -%}
+        <a href="{{ collection.url }}" class="category-card">
+          <div class="category-card-image" style="border-radius:18px;">
+            {%- if collection.featured_image -%}
+              <img src="{{ collection.featured_image | image_url: width: 500 }}" alt="{{ collection.title }}" loading="lazy" width="500" height="500">
+            {%- endif -%}
+          </div>
+          <span class="category-card-label">{{ collection.title }}</span>
+        </a>
+      {%- endunless -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Collection list",
+  "settings": []
+}
+{% endschema %}

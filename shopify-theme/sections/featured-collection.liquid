@@ -1,0 +1,43 @@
+{%- assign section_style = '' -%}
+{%- if section.settings.tinted -%}
+  {%- assign section_style = 'background:var(--color-cream);' -%}
+{%- endif -%}
+<section class="section-padding" style="{{ section_style }}">
+  <div class="container">
+    <div class="product-rail-head">
+      <div>
+        <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="section-title">{{ section.settings.title }}</h2>
+        {%- if section.settings.description != blank -%}
+          <p class="section-desc">{{ section.settings.description }}</p>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.collection != blank -%}
+        <a href="{{ section.settings.collection.url }}" class="btn btn-secondary">View All</a>
+      {%- endif -%}
+    </div>
+
+    <div class="product-grid">
+      {%- if section.settings.collection != blank -%}
+        {%- for product in section.settings.collection.products limit: section.settings.product_count -%}
+          {% render 'product-card', product: product %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured collection",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Favorites" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Best Sellers" },
+    { "type": "textarea", "id": "description", "label": "Description" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_count", "label": "Products to show", "min": 4, "max": 12, "step": 4, "default": 8 },
+    { "type": "checkbox", "id": "tinted", "label": "Tinted background", "default": false }
+  ],
+  "presets": [{ "name": "Featured collection" }]
+}
+{% endschema %}

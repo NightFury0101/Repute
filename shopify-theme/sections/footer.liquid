@@ -1,0 +1,57 @@
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-brand">{{ shop.name }}</p>
+        <p style="max-width:22rem;font-size:0.85rem;line-height:1.7;">
+          {{ section.settings.about_text | default: 'Premium beauty, thoughtfully curated — makeup, skincare, haircare, fragrance and body care.' }}
+        </p>
+      </div>
+
+      {%- for block in section.blocks -%}
+        <div {{ block.shopify_attributes }}>
+          <h4>{{ block.settings.title }}</h4>
+          <div class="footer-links">
+            {%- for link in block.settings.menu.links -%}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    <div class="footer-bottom">
+      &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "about_text",
+      "label": "About text"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Column title", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "link_column", "settings": { "title": "Shop" } },
+      { "type": "link_column", "settings": { "title": "Support" } },
+      { "type": "link_column", "settings": { "title": "Company" } }
+    ]
+  }
+}
+{% endschema %}

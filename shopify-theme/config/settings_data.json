@@ -1,0 +1,21 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_ivory": "#fbf7f2",
+      "color_cream": "#f5eee4",
+      "color_warm_white": "#fffdfb",
+      "color_sand": "#ece2d4",
+      "color_blush": "#f1dcd7",
+      "color_blush_deep": "#e3bdb6",
+      "color_rose_gold": "#b98a72",
+      "color_rose_gold_dark": "#9c6f58",
+      "color_ink": "#211d1a",
+      "color_ink_soft": "#4a433c",
+      "color_ink_mute": "#7c7266",
+      "color_line": "#e5dccd",
+      "font_serif": "'Playfair Display', Georgia, serif",
+      "font_sans": "'Inter', sans-serif"
+    }
+  }
+}

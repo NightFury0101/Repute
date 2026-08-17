@@ -1,0 +1,25 @@
+<section class="newsletter">
+  <div class="container">
+    <h2>{{ section.settings.title }}</h2>
+    <p>{{ section.settings.subtitle }}</p>
+    {% form 'customer', class: 'newsletter-form' %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <input type="email" name="contact[email]" placeholder="Your email address" required>
+      <button type="submit" class="btn btn-primary">Join</button>
+      {%- if form.posted_successfully? -%}
+        <p style="width:100%;margin-top:12px;font-size:0.8rem;">You're on the list — welcome to {{ shop.name }}.</p>
+      {%- endif -%}
+    {% endform %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Join the Repute Circle" },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "First access to new formulas, ritual guides, and members-only offers." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
+{% endschema %}

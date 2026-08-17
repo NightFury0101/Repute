@@ -1,0 +1,54 @@
+<section class="section-padding">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:36px;">
+      <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+      <h2 class="section-title">{{ section.settings.title }}</h2>
+    </div>
+    <div class="category-grid">
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link }}" class="category-card fade-up" {{ block.shopify_attributes }}>
+          <div class="category-card-image">
+            {%- if block.settings.image -%}
+              <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.label }}" loading="lazy" width="400" height="400">
+            {%- endif -%}
+          </div>
+          <span class="category-card-label">{{ block.settings.label }}</span>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category grid",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop By Category" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Find your ritual" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "image_picker", "id": "image", "label": "Image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category grid",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Makeup" } },
+        { "type": "category", "settings": { "label": "Skincare" } },
+        { "type": "category", "settings": { "label": "Haircare" } },
+        { "type": "category", "settings": { "label": "Fragrance" } },
+        { "type": "category", "settings": { "label": "Body Care" } },
+        { "type": "category", "settings": { "label": "Tools" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

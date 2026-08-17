@@ -1,0 +1,56 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "eyebrow": "New Formula · Daily Ritual",
+        "title_line1": "Glow that feels",
+        "title_line2": "naturally yours.",
+        "subtitle": "Lightweight skincare designed to leave your skin calm, luminous, and hydrated.",
+        "cta_label": "Shop the Collection",
+        "cta_url": "/collections/all",
+        "secondary_label": "Explore Collection",
+        "secondary_url": "/collections/all"
+      }
+    },
+    "categories": {
+      "type": "category-grid",
+      "blocks": {
+        "cat-1": { "type": "category", "settings": { "label": "Makeup", "link": "/collections/makeup" } },
+        "cat-2": { "type": "category", "settings": { "label": "Skincare", "link": "/collections/skincare" } },
+        "cat-3": { "type": "category", "settings": { "label": "Haircare", "link": "/collections/haircare" } },
+        "cat-4": { "type": "category", "settings": { "label": "Fragrance", "link": "/collections/fragrance" } },
+        "cat-5": { "type": "category", "settings": { "label": "Body Care", "link": "/collections/body-care" } },
+        "cat-6": { "type": "category", "settings": { "label": "Tools", "link": "/collections/tools" } }
+      },
+      "block_order": ["cat-1", "cat-2", "cat-3", "cat-4", "cat-5", "cat-6"]
+    },
+    "best-sellers": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Customer Favorites",
+        "title": "Best Sellers",
+        "description": "The formulas our community reaches for again and again.",
+        "collection": "all",
+        "product_count": 8,
+        "tinted": false
+      }
+    },
+    "new-arrivals": {
+      "type": "featured-collection",
+      "settings": {
+        "eyebrow": "Just Landed",
+        "title": "New Arrivals",
+        "description": "Fresh formulas, straight from the lab to your routine.",
+        "collection": "all",
+        "product_count": 8,
+        "tinted": true
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "categories", "best-sellers", "new-arrivals", "newsletter"]
+}

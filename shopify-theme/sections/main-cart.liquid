@@ -1,0 +1,61 @@
+<div class="container">
+  {%- if cart.item_count == 0 -%}
+    <div class="empty-state">
+      <h2>Your cart is empty</h2>
+      <p class="section-desc" style="margin:0 auto 24px;">Looks like you haven't added anything yet.</p>
+      <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+  {%- else -%}
+    {% form 'cart', cart, id: 'CartForm' %}
+      <div class="cart-layout">
+        <div>
+          <h1 class="section-title" style="margin-bottom:24px;">Your Cart</h1>
+          {%- for item in cart.items -%}
+            <div class="cart-line">
+              <img src="{{ item.image | image_url: width: 180 }}" alt="{{ item.title }}" width="90" height="90">
+              <div>
+                <p style="font-weight:500;margin:0 0 4px;">{{ item.product.title }}</p>
+                {%- unless item.variant.title == 'Default Title' -%}
+                  <p style="font-size:0.8rem;color:var(--color-ink-mute);margin:0 0 8px;">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                <div class="qty-stepper">
+                  <button type="button" data-cart-qty-decrease data-line="{{ forloop.index }}">−</button>
+                  <input type="number" name="updates[]" value="{{ item.quantity }}" min="0" data-cart-qty-input data-line="{{ forloop.index }}">
+                  <button type="button" data-cart-qty-increase data-line="{{ forloop.index }}">+</button>
+                </div>
+              </div>
+              <div style="text-align:right;">
+                <p style="font-weight:500;">{{ item.final_line_price | money }}</p>
+                <a href="{{ item.url_to_remove }}" style="font-size:0.75rem;color:var(--color-ink-mute);text-decoration:underline;">Remove</a>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        <aside class="cart-summary">
+          <h2 style="font-family:var(--font-serif);font-size:1.3rem;margin:0 0 20px;">Order Summary</h2>
+          <div class="cart-summary-row">
+            <span>Subtotal</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <div class="cart-summary-row">
+            <span>Shipping</span>
+            <span>Calculated at checkout</span>
+          </div>
+          <div class="cart-summary-total">
+            <span>Total</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <button type="submit" name="checkout" class="btn btn-primary" style="width:100%;">Proceed to Checkout</button>
+        </aside>
+      </div>
+    {% endform %}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

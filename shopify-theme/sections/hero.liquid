@@ -1,0 +1,54 @@
+<section class="hero">
+  <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+  <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+
+  <div class="hero-copy fade-up">
+    <span class="eyebrow">{{ section.settings.eyebrow }}</span>
+    <h1 class="hero-title">
+      {{ section.settings.title_line1 }}<br>
+      <em>{{ section.settings.title_line2 }}</em>
+    </h1>
+    <p class="hero-subtitle">{{ section.settings.subtitle }}</p>
+    <div class="hero-cta-row">
+      {%- if section.settings.cta_label != blank -%}
+        <a class="btn btn-primary" href="{{ section.settings.cta_url }}">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+      {%- if section.settings.secondary_label != blank -%}
+        <a class="hero-link" href="{{ section.settings.secondary_url }}">{{ section.settings.secondary_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="hero-product-wrap">
+    <div class="hero-product-glow" aria-hidden="true"></div>
+    {%- if section.settings.product_image -%}
+      <img
+        class="hero-product-float"
+        src="{{ section.settings.product_image | image_url: width: 800 }}"
+        alt=""
+        width="{{ section.settings.product_image.width }}"
+        height="{{ section.settings.product_image.height }}"
+        loading="eager"
+        fetchpriority="high"
+      >
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New Formula · Daily Ritual" },
+    { "type": "text", "id": "title_line1", "label": "Title line 1", "default": "Glow that feels" },
+    { "type": "text", "id": "title_line2", "label": "Title line 2 (accent)", "default": "naturally yours." },
+    { "type": "textarea", "id": "subtitle", "label": "Subtitle", "default": "Lightweight skincare designed to leave your skin calm, luminous, and hydrated." },
+    { "type": "text", "id": "cta_label", "label": "Primary button label", "default": "Shop the Collection" },
+    { "type": "url", "id": "cta_url", "label": "Primary button link" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary link label", "default": "Explore Collection" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary link" },
+    { "type": "image_picker", "id": "product_image", "label": "Product image (transparent PNG recommended)" }
+  ],
+  "presets": [{ "name": "Hero" }]
+}
+{% endschema %}

@@ -1,0 +1,37 @@
+{%- comment -%}
+  Renders a product card. Usage: {% render 'product-card', product: product %}
+{%- endcomment -%}
+
+<a href="{{ product.url }}" class="product-card fade-up">
+  <div class="product-card-image">
+    {%- if product.featured_media -%}
+      <img
+        src="{{ product.featured_media | image_url: width: 600 }}"
+        alt="{{ product.featured_media.alt | default: product.title }}"
+        loading="lazy"
+        width="600"
+        height="{{ 600 | divided_by: product.featured_media.aspect_ratio | default: 800 }}"
+      >
+    {%- endif -%}
+    {%- assign now_unix = 'now' | date: '%s' -%}
+    {%- assign created_unix = product.created_at | date: '%s' -%}
+    {%- assign days_old = now_unix | minus: created_unix | divided_by: 86400 -%}
+    {%- if product.compare_at_price > product.price -%}
+      <span class="product-card-badge">Sale</span>
+    {%- elsif days_old <= 30 -%}
+      <span class="product-card-badge">New</span>
+    {%- endif -%}
+  </div>
+  {%- if product.vendor != blank -%}
+    <p class="product-card-brand">{{ product.vendor }}</p>
+  {%- endif -%}
+  <p class="product-card-title">{{ product.title }}</p>
+  <p class="product-card-price">
+    {%- if product.compare_at_price > product.price -%}
+      <span>{{ product.price | money }}</span>
+      <s>{{ product.compare_at_price | money }}</s>
+    {%- else -%}
+      <span>{{ product.price | money }}</span>
+    {%- endif -%}
+  </p>
+</a>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="canonical" href="{{ canonical_url }}">
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+  <title>
+    {{ page_title }}{% unless page_title contains shop.name %} | {{ shop.name }}{% endunless %}
+  </title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  {{ content_for_header }}
+  {{ 'theme.css' | asset_url | stylesheet_tag }}
+  <link rel="icon" href="{{ 'symbol.png' | asset_url }}" type="image/png">
+  <style>
+    :root {
+      --color-ivory: {{ settings.color_ivory }};
+      --color-cream: {{ settings.color_cream }};
+      --color-warm-white: {{ settings.color_warm_white }};
+      --color-sand: {{ settings.color_sand }};
+      --color-blush: {{ settings.color_blush }};
+      --color-blush-deep: {{ settings.color_blush_deep }};
+      --color-rose-gold: {{ settings.color_rose_gold }};
+      --color-rose-gold-dark: {{ settings.color_rose_gold_dark }};
+      --color-ink: {{ settings.color_ink }};
+      --color-ink-soft: {{ settings.color_ink_soft }};
+      --color-ink-mute: {{ settings.color_ink_mute }};
+      --color-line: {{ settings.color_line }};
+      --font-serif: {{ settings.font_serif }};
+      --font-sans: {{ settings.font_sans }};
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link visually-hidden" href="#MainContent">Skip to content</a>
+
+  {% section 'header' %}
+
+  <main id="MainContent">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+</body>
+</html>

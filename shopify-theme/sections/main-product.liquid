@@ -1,0 +1,113 @@
+<section class="container">
+  <div class="product-layout">
+    <div>
+      <div class="product-gallery-main">
+        <img
+          id="ProductMainImage"
+          src="{{ product.featured_media | image_url: width: 900 }}"
+          alt="{{ product.featured_media.alt | default: product.title }}"
+          width="900"
+          height="{{ 900 | divided_by: product.featured_media.aspect_ratio | default: 900 }}"
+        >
+      </div>
+      {%- if product.media.size > 1 -%}
+        <div class="product-gallery-thumbs">
+          {%- for media in product.media -%}
+            <img
+              src="{{ media | image_url: width: 150 }}"
+              alt="{{ media.alt | default: product.title }}"
+              data-gallery-thumb
+              data-full-src="{{ media | image_url: width: 900 }}"
+              loading="lazy"
+              width="72"
+              height="72"
+            >
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div>
+      {%- if product.vendor != blank -%}
+        <p class="product-brand-label">{{ product.vendor }}</p>
+      {%- endif -%}
+      <h1 class="product-title">{{ product.title }}</h1>
+
+      <p class="product-price" id="ProductPrice">
+        {%- if product.selected_or_first_available_variant.compare_at_price > product.selected_or_first_available_variant.price -%}
+          <s>{{ product.selected_or_first_available_variant.compare_at_price | money }}</s>
+        {%- endif -%}
+        {{ product.selected_or_first_available_variant.price | money }}
+      </p>
+
+      {%- if product.description != blank -%}
+        <div class="product-desc">{{ product.description }}</div>
+      {%- endif -%}
+
+      {% form 'product', product, id: 'ProductForm', data-product-form: '' %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId">
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for option in product.options_with_values -%}
+            <div class="variant-group">
+              <span class="variant-label">{{ option.name }}</span>
+              <div class="variant-options" data-option-index="{{ forloop.index0 }}">
+                {%- for value in option.values -%}
+                  <button
+                    type="button"
+                    class="variant-pill"
+                    data-option-value="{{ value | escape }}"
+                  >{{ value }}</button>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="qty-row">
+          <span class="variant-label" style="margin:0;">Quantity</span>
+          <div class="qty-stepper">
+            <button type="button" data-qty-decrease aria-label="Decrease quantity">−</button>
+            <input type="number" name="quantity" value="1" min="1" id="ProductQuantity">
+            <button type="button" data-qty-increase aria-label="Increase quantity">+</button>
+          </div>
+        </div>
+
+        <div class="add-to-cart-row">
+          <button type="submit" class="btn btn-primary" id="AddToCartButton" {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+            <span id="AddToCartText">
+              {%- if product.selected_or_first_available_variant.available -%}Add to Cart{%- else -%}Sold Out{%- endif -%}
+            </span>
+          </button>
+          <button type="button" class="icon-btn" style="width:50px;height:50px;border:1px solid var(--color-line);" aria-label="Add to wishlist" data-wishlist-toggle>
+            {% render 'icon-heart' %}
+          </button>
+        </div>
+      {% endform %}
+    </div>
+  </div>
+
+  {%- if section.settings.show_related and product.metafields.custom.related_collection != blank -%}
+    <div class="section-padding" style="border-top:1px solid var(--color-line);">
+      <h2 class="section-title" style="text-align:center;margin-bottom:32px;">You may also like</h2>
+      <div class="product-grid">
+        {%- for related in product.metafields.custom.related_collection.value.products limit: 4 -%}
+          {% render 'product-card', product: related %}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+<script type="application/json" id="ProductVariantsJson">
+  {{ product.variants | json }}
+</script>
+
+{% schema %}
+{
+  "name": "Product information",
+  "settings": [
+    { "type": "checkbox", "id": "show_related", "label": "Show related products", "default": true }
+  ]
+}
+{% endschema %}

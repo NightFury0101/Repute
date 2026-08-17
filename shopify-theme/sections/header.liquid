@@ -1,0 +1,66 @@
+<header class="site-header" id="SiteHeader">
+  {%- if section.settings.announcement != blank -%}
+    <div class="announcement-bar">{{ section.settings.announcement }}</div>
+  {%- endif -%}
+
+  <div class="container header-inner">
+    <button class="mobile-nav-toggle" aria-label="Open menu" data-mobile-nav-toggle>
+      {% render 'icon-menu' %}
+    </button>
+
+    <a href="{{ routes.root_url }}" class="brand-mark">{{ shop.name }}</a>
+
+    <nav class="main-nav" aria-label="Main navigation">
+      {%- for link in section.settings.main_menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+
+    <div class="header-actions">
+      <a href="{{ routes.search_url }}" class="icon-btn" aria-label="Search">
+        {% render 'icon-search' %}
+      </a>
+      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="Account">
+        {% render 'icon-account' %}
+      </a>
+      <a href="{{ routes.cart_url }}" class="icon-btn" aria-label="Cart" data-cart-icon-link>
+        {% render 'icon-bag' %}
+        <span class="cart-count" data-cart-count {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="mobile-nav" data-mobile-nav hidden>
+    <div class="mobile-nav-head">
+      <span class="brand-mark" style="font-size:1.3rem;">Menu</span>
+      <button class="icon-btn" aria-label="Close menu" data-mobile-nav-close>
+        {% render 'icon-close' %}
+      </button>
+    </div>
+    <nav>
+      {%- for link in section.settings.main_menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "text",
+      "id": "announcement",
+      "label": "Announcement bar text",
+      "default": "Complimentary shipping on all orders over $75"
+    }
+  ]
+}
+{% endschema %}

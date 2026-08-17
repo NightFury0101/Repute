@@ -1,0 +1,63 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Repute",
+    "theme_version": "1.0.0",
+    "theme_author": "Repute",
+    "theme_documentation_url": "https://github.com/NightFury0101/Repute",
+    "theme_support_email": "hello@repute.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "header", "content": "Neutrals" },
+      { "type": "color", "id": "color_ivory", "label": "Ivory (background)", "default": "#fbf7f2" },
+      { "type": "color", "id": "color_cream", "label": "Cream (tint)", "default": "#f5eee4" },
+      { "type": "color", "id": "color_warm_white", "label": "Warm white", "default": "#fffdfb" },
+      { "type": "color", "id": "color_sand", "label": "Sand (image placeholder bg)", "default": "#ece2d4" },
+      { "type": "header", "content": "Accent" },
+      { "type": "color", "id": "color_blush", "label": "Blush", "default": "#f1dcd7" },
+      { "type": "color", "id": "color_blush_deep", "label": "Blush deep", "default": "#e3bdb6" },
+      { "type": "color", "id": "color_rose_gold", "label": "Rose gold", "default": "#b98a72" },
+      { "type": "color", "id": "color_rose_gold_dark", "label": "Rose gold dark (links/accents)", "default": "#9c6f58" },
+      { "type": "header", "content": "Text" },
+      { "type": "color", "id": "color_ink", "label": "Ink (headings, buttons)", "default": "#211d1a" },
+      { "type": "color", "id": "color_ink_soft", "label": "Ink soft (body text)", "default": "#4a433c" },
+      { "type": "color", "id": "color_ink_mute", "label": "Ink mute (muted text)", "default": "#7c7266" },
+      { "type": "color", "id": "color_line", "label": "Line / border", "default": "#e5dccd" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "select",
+        "id": "font_serif",
+        "label": "Heading font",
+        "options": [
+          { "value": "'Playfair Display', Georgia, serif", "label": "Playfair Display" },
+          { "value": "Georgia, serif", "label": "Georgia" }
+        ],
+        "default": "'Playfair Display', Georgia, serif"
+      },
+      {
+        "type": "select",
+        "id": "font_sans",
+        "label": "Body font",
+        "options": [
+          { "value": "'Inter', sans-serif", "label": "Inter" },
+          { "value": "-apple-system, BlinkMacSystemFont, sans-serif", "label": "System default" }
+        ],
+        "default": "'Inter', sans-serif"
+      }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
+      { "type": "text", "id": "social_tiktok", "label": "TikTok URL" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook URL" }
+    ]
+  }
+]
