@@ -15,7 +15,7 @@ export function NewsletterForm({ variant = "dark" }: { variant?: "dark" | "light
     startTransition(async () => {
       const result = await subscribeNewsletter(email);
       if (result.success) {
-        toast.success("You're on the list — welcome to Maldibay.");
+        toast.success("You're on the list — welcome to Repute.");
         setEmail("");
       } else {
         toast.error(result.error);

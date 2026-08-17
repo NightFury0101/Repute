@@ -17,6 +17,6 @@ export const useRecentlyViewedStore = create<RecentlyViewedState>()(
         set({ ids: [id, ...current].slice(0, 16) });
       },
     }),
-    { name: "maldibay-recently-viewed" }
+    { name: "repute-recently-viewed" }
   )
 );

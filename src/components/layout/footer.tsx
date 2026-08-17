@@ -14,7 +14,7 @@ export function Footer({ categories }: { categories: Category[] }) {
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-3 lg:grid-cols-6">
           <div className="col-span-2 sm:col-span-3 lg:col-span-2 flex flex-col gap-4">
             <Link href="/" className="font-serif text-2xl text-warm-white">
-              Maldibay
+              Repute
             </Link>
             <p className="text-sm leading-relaxed max-w-xs">
               Thoughtfully formulated beauty essentials — makeup, skincare, haircare, fragrance and body
@@ -75,7 +75,7 @@ export function Footer({ categories }: { categories: Category[] }) {
         </div>
 
         <div className="mt-14 pt-8 border-t border-warm-white/15 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-warm-white/60">© {year} Maldibay. All rights reserved.</p>
+          <p className="text-xs text-warm-white/60">© {year} Repute. All rights reserved.</p>
           <div className="flex items-center gap-4 text-warm-white/60">
             <span className="flex items-center gap-1.5 text-xs"><CreditCard size={16} /> Visa</span>
             <span className="flex items-center gap-1.5 text-xs"><CreditCard size={16} /> Mastercard</span>

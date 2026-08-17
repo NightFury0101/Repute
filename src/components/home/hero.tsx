@@ -9,7 +9,7 @@ export function Hero({ settings }: { settings: HomepageSettings }) {
       <div className="relative h-[86vh] min-h-[560px] max-h-[880px] w-full">
         <Image
           src={settings.heroImage}
-          alt="Maldibay editorial hero"
+          alt="Repute editorial hero"
           fill
           priority
           sizes="100vw"

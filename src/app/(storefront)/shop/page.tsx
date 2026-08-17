@@ -4,7 +4,7 @@ import type { ShopSearchParams } from "@/lib/shop-params";
 
 export const metadata: Metadata = {
   title: "Shop All Products",
-  description: "Browse the full Maldibay catalog — makeup, skincare, haircare, fragrance, body care and tools.",
+  description: "Browse the full Repute catalog — makeup, skincare, haircare, fragrance, body care and tools.",
 };
 
 export default async function ShopPage({
@@ -24,7 +24,7 @@ export default async function ShopPage({
     <ShopView
       searchParams={params}
       title={params.filter ? filterTitles[params.filter] ?? "Shop All" : params.q ? `Results for "${params.q}"` : "Shop All"}
-      description="Every formula in the Maldibay catalog, in one place. Filter by category, brand, price and more."
+      description="Every formula in the Repute catalog, in one place. Filter by category, brand, price and more."
     />
   );
 }

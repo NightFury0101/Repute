@@ -8,7 +8,7 @@ export function NewsletterSection() {
       <Container>
         <Reveal className="mx-auto max-w-2xl flex flex-col items-center text-center rounded-3xl bg-blush/50 px-8 py-16 sm:px-16">
           <span className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-gold-dark">
-            Join the Maldibay Circle
+            Join the Repute Circle
           </span>
           <h2 className="font-serif text-3xl sm:text-4xl mt-4 text-ink">Beauty notes, delivered.</h2>
           <p className="mt-4 text-ink-soft max-w-md">

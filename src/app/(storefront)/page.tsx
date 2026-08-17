@@ -23,7 +23,7 @@ export default async function HomePage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Maldibay",
+    name: "Repute",
     url: siteUrl,
     logo: `${siteUrl}/favicon.svg`,
     sameAs: [],

@@ -38,7 +38,7 @@ export function AdminSidebar() {
   return (
     <aside className="hidden lg:flex flex-col w-64 shrink-0 bg-ink text-warm-white min-h-screen sticky top-0">
       <Link href="/admin" className="font-serif text-xl px-6 py-6 border-b border-warm-white/10">
-        Maldibay <span className="text-warm-white/40 text-sm font-sans">Admin</span>
+        Repute <span className="text-warm-white/40 text-sm font-sans">Admin</span>
       </Link>
       <nav className="flex-1 flex flex-col gap-1 p-4">
         {LINKS.map((link) => {

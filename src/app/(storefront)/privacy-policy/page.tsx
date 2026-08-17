@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "How Maldibay collects, uses and protects your personal information.",
+  description: "How Repute collects, uses and protects your personal information.",
 };
 
 export default function PrivacyPolicyPage() {
@@ -16,7 +16,7 @@ export default function PrivacyPolicyPage() {
         <div className="mt-10 flex flex-col gap-9 text-ink-soft leading-relaxed [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-ink [&_h2]:mb-3">
           <section>
             <p>
-              Maldibay (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) respects your privacy and is committed to
+              Repute (&quot;we&quot;, &quot;us&quot;, &quot;our&quot;) respects your privacy and is committed to
               protecting the personal information you share with us. This policy explains what data we collect,
               how we use it, and the choices you have.
             </p>
@@ -83,7 +83,7 @@ export default function PrivacyPolicyPage() {
           <section>
             <h2>Children&apos;s Privacy</h2>
             <p>
-              Maldibay is not directed at children under 16, and we do not knowingly collect personal information
+              Repute is not directed at children under 16, and we do not knowingly collect personal information
               from children.
             </p>
           </section>
@@ -100,8 +100,8 @@ export default function PrivacyPolicyPage() {
             <h2>Contact Us</h2>
             <p>
               Questions about this policy or your data? Reach us anytime at{" "}
-              <a href="mailto:privacy@maldibay.com" className="text-ink underline underline-offset-2">
-                privacy@maldibay.com
+              <a href="mailto:privacy@repute.com" className="text-ink underline underline-offset-2">
+                privacy@repute.com
               </a>{" "}
               or through our{" "}
               <a href="/contact" className="text-ink underline underline-offset-2">

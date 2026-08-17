@@ -5,7 +5,7 @@ import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/
 
 export const metadata: Metadata = {
   title: "FAQ",
-  description: "Answers to frequently asked questions about ordering, shipping, returns and products at Maldibay.",
+  description: "Answers to frequently asked questions about ordering, shipping, returns and products at Repute.",
 };
 
 const FAQ_GROUPS = [
@@ -60,7 +60,7 @@ const FAQ_GROUPS = [
     title: "Products & Ingredients",
     items: [
       {
-        q: "Are Maldibay products cruelty-free?",
+        q: "Are Repute products cruelty-free?",
         a: "Yes — every brand we carry is certified cruelty-free, and a growing number of our formulas are also fully vegan. Look for the badges on each product page.",
       },
       {

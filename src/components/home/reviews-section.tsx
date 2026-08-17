@@ -34,7 +34,7 @@ export async function ReviewsSection() {
                 {review.title && <p className="font-serif text-lg text-ink">{review.title}</p>}
                 <p className="text-sm text-ink-soft leading-relaxed line-clamp-4">{review.comment}</p>
                 <div className="mt-auto pt-4 flex items-center gap-3">
-                  <AvatarInitials name={review.user.name ?? "Maldibay Customer"} size={36} />
+                  <AvatarInitials name={review.user.name ?? "Repute Customer"} size={36} />
                   <div>
                     <p className="text-sm font-medium text-ink">{review.user.name ?? "Verified Customer"}</p>
                     <p className="text-xs text-ink-mute">on {review.product.name}</p>

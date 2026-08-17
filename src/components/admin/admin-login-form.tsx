@@ -37,7 +37,7 @@ export function AdminLoginForm({ callbackUrl = "/admin" }: { callbackUrl?: strin
     <form onSubmit={handleSubmit} className="flex flex-col gap-5 w-full max-w-sm">
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="email">Admin Email</Label>
-        <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@maldibay.com" />
+        <Input id="email" type="email" required value={email} onChange={(e) => setEmail(e.target.value)} placeholder="admin@repute.com" />
       </div>
       <div className="flex flex-col gap-1.5">
         <Label htmlFor="password">Password</Label>

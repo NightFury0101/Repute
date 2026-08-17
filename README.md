@@ -1,4 +1,4 @@
-# Maldibay — Premium Beauty E-Commerce
+# Repute — Premium Beauty E-Commerce
 
 A full-stack, production-architected e-commerce platform for a premium cosmetics and beauty
 brand — storefront, customer accounts and a complete no-code admin dashboard, all backed by a

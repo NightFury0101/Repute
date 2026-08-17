@@ -14,7 +14,7 @@ export async function generateMetadata({
   if (!category) return {};
   return {
     title: category.name,
-    description: category.description ?? `Shop ${category.name} at Maldibay.`,
+    description: category.description ?? `Shop ${category.name} at Repute.`,
     openGraph: category.image ? { images: [category.image] } : undefined,
   };
 }

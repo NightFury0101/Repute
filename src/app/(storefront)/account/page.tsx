@@ -27,7 +27,7 @@ export default async function AccountOverviewPage() {
       <div className="flex items-center gap-4 rounded-2xl bg-ivory p-6">
         <AvatarInitials name={user.name ?? user.email} size={56} />
         <div>
-          <p className="font-serif text-2xl text-ink">{user.name ?? "Maldibay Customer"}</p>
+          <p className="font-serif text-2xl text-ink">{user.name ?? "Repute Customer"}</p>
           <p className="text-sm text-ink-mute">{user.email}</p>
           <p className="text-xs text-ink-mute mt-1">Member since {formatDate(user.createdAt)}</p>
         </div>

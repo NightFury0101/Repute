@@ -21,7 +21,7 @@ export default async function AdminLoginPage({
           <div className="h-12 w-12 rounded-full bg-warm-white/10 flex items-center justify-center mx-auto mb-5">
             <Lock size={18} className="text-warm-white" />
           </div>
-          <p className="font-serif text-2xl text-warm-white">Maldibay Admin</p>
+          <p className="font-serif text-2xl text-warm-white">Repute Admin</p>
           <p className="text-warm-white/50 text-sm mt-2">Sign in to manage your store.</p>
         </div>
         <AdminLoginForm callbackUrl={callbackUrl ?? "/admin"} />

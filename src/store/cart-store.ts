@@ -122,7 +122,7 @@ export const useCartStore = create<CartState>()(
       clearPromo: () => set({ promoCode: null, discountAmount: 0 }),
     }),
     {
-      name: "maldibay-cart",
+      name: "repute-cart",
       partialize: (state) => ({
         items: state.items,
         saved: state.saved,

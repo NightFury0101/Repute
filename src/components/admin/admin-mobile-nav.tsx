@@ -28,7 +28,7 @@ export function AdminMobileNav() {
   return (
     <div className="lg:hidden sticky top-0 z-30 flex items-center justify-between bg-ink text-warm-white px-5 py-4">
       <Link href="/admin" className="font-serif text-lg">
-        Maldibay <span className="text-warm-white/40 text-xs font-sans">Admin</span>
+        Repute <span className="text-warm-white/40 text-xs font-sans">Admin</span>
       </Link>
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger className="p-2 cursor-pointer" aria-label="Open admin menu">

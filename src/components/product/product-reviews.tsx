@@ -58,7 +58,7 @@ export function ProductReviews({ product }: { product: ProductDetail }) {
               return (
                 <div key={review.id} className="pb-8 border-b border-line last:border-0">
                   <div className="flex items-start gap-3">
-                    <AvatarInitials name={review.user.name ?? "Maldibay Customer"} size={40} />
+                    <AvatarInitials name={review.user.name ?? "Repute Customer"} size={40} />
                     <div className="flex-1">
                       <div className="flex items-center gap-2 flex-wrap">
                         <p className="text-sm font-medium text-ink">{review.user.name ?? "Verified Customer"}</p>

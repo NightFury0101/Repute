@@ -5,7 +5,7 @@ import { FREE_SHIPPING_THRESHOLD } from "@/lib/constants";
 
 export const metadata: Metadata = {
   title: "Shipping & Returns",
-  description: "Maldibay shipping timelines, delivery costs, and our 30-day return policy.",
+  description: "Repute shipping timelines, delivery costs, and our 30-day return policy.",
 };
 
 export default function ShippingReturnsPage() {

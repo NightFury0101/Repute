@@ -21,6 +21,6 @@ export const useSearchStore = create<SearchState>()(
       },
       clearRecent: () => set({ recent: [] }),
     }),
-    { name: "maldibay-recent-searches" }
+    { name: "repute-recent-searches" }
   )
 );

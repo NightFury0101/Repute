@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
   title: "About Us",
-  description: "The story, values and people behind Maldibay — a premium beauty destination built on quiet luxury and considered formulation.",
+  description: "The story, values and people behind Repute — a premium beauty destination built on quiet luxury and considered formulation.",
 };
 
 const VALUES = [
@@ -38,7 +38,7 @@ export default function AboutPage() {
   return (
     <div>
       <section className="relative h-[56vh] min-h-[420px] max-h-[620px] w-full">
-        <Image src="/generated/hero/about-hero.jpg" alt="Maldibay studio" fill priority sizes="100vw" className="object-cover" />
+        <Image src="/generated/hero/about-hero.jpg" alt="Repute studio" fill priority sizes="100vw" className="object-cover" />
         <div className="absolute inset-0 bg-ink/35 flex items-center justify-center text-center px-6">
           <div>
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-warm-white/80">Our Story</span>
@@ -50,7 +50,7 @@ export default function AboutPage() {
       <Container className="py-20 sm:py-28">
         <Reveal className="max-w-2xl mx-auto text-center">
           <p className="text-lg text-ink-soft leading-relaxed">
-            Maldibay began with a simple frustration: too much of the beauty industry asks you to choose between
+            Repute began with a simple frustration: too much of the beauty industry asks you to choose between
             formulas that work and brands that feel considered. We didn&apos;t think that trade-off should exist. So
             we built a home for makeup, skincare, haircare, fragrance and body care that is as thoughtful in its
             formulation as it is in its presentation — sourced from independent labs and studios who care as much
@@ -81,7 +81,7 @@ export default function AboutPage() {
       <Container className="py-20 sm:py-28">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <Reveal className="relative aspect-[4/5] rounded-3xl overflow-hidden">
-            <Image src="/generated/hero/featured-collection.jpg" alt="Maldibay curation" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
+            <Image src="/generated/hero/featured-collection.jpg" alt="Repute curation" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" />
           </Reveal>
           <Reveal delay={100}>
             <span className="text-xs font-semibold uppercase tracking-[0.2em] text-rose-gold-dark">How We Curate</span>

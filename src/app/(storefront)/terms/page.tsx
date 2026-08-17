@@ -3,7 +3,7 @@ import { Container } from "@/components/ui/container";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions",
-  description: "The terms and conditions governing your use of Maldibay and purchases made on our site.",
+  description: "The terms and conditions governing your use of Repute and purchases made on our site.",
 };
 
 export default function TermsPage() {
@@ -16,7 +16,7 @@ export default function TermsPage() {
         <div className="mt-10 flex flex-col gap-9 text-ink-soft leading-relaxed [&_h2]:font-serif [&_h2]:text-2xl [&_h2]:text-ink [&_h2]:mb-3">
           <section>
             <p>
-              These Terms &amp; Conditions (&quot;Terms&quot;) govern your access to and use of Maldibay
+              These Terms &amp; Conditions (&quot;Terms&quot;) govern your access to and use of Repute
               (&quot;the Site&quot;), including any purchase made through it. By creating an account or placing an
               order, you agree to these Terms.
             </p>
@@ -26,7 +26,7 @@ export default function TermsPage() {
             <h2>1. Eligibility</h2>
             <p>
               You must be at least 18 years old, or have the consent of a parent or guardian, to create an account
-              or place an order on Maldibay.
+              or place an order on Repute.
             </p>
           </section>
 
@@ -64,7 +64,7 @@ export default function TermsPage() {
               <a href="/shipping-returns" className="text-ink underline underline-offset-2">
                 Shipping &amp; Returns
               </a>{" "}
-              page. Maldibay is not responsible for delays caused by couriers, customs, or circumstances outside our
+              page. Repute is not responsible for delays caused by couriers, customs, or circumstances outside our
               reasonable control.
             </p>
           </section>
@@ -83,7 +83,7 @@ export default function TermsPage() {
           <section>
             <h2>7. Reviews & User Content</h2>
             <p>
-              By submitting a review, photo, or other content, you grant Maldibay a non-exclusive, royalty-free
+              By submitting a review, photo, or other content, you grant Repute a non-exclusive, royalty-free
               license to display and use that content in connection with our site and marketing. You confirm that
               any content you submit is your own and does not violate any third party&apos;s rights. We reserve the
               right to moderate, edit, or remove content that violates our community guidelines.
@@ -102,7 +102,7 @@ export default function TermsPage() {
           <section>
             <h2>9. Intellectual Property</h2>
             <p>
-              All content on Maldibay — including text, graphics, logos, and images — is the property of Maldibay
+              All content on Repute — including text, graphics, logos, and images — is the property of Repute
               or its licensors and is protected by applicable intellectual property laws. You may not reproduce or
               use our content without written permission.
             </p>
@@ -111,7 +111,7 @@ export default function TermsPage() {
           <section>
             <h2>10. Limitation of Liability</h2>
             <p>
-              Maldibay is provided on an &quot;as is&quot; basis. To the fullest extent permitted by law, we are not
+              Repute is provided on an &quot;as is&quot; basis. To the fullest extent permitted by law, we are not
               liable for any indirect, incidental, or consequential damages arising from your use of the Site or
               products purchased through it. Nothing in these Terms limits liability that cannot be excluded under
               applicable law.
@@ -130,8 +130,8 @@ export default function TermsPage() {
             <h2>12. Contact</h2>
             <p>
               Questions about these Terms can be sent to{" "}
-              <a href="mailto:legal@maldibay.com" className="text-ink underline underline-offset-2">
-                legal@maldibay.com
+              <a href="mailto:legal@repute.com" className="text-ink underline underline-offset-2">
+                legal@repute.com
               </a>{" "}
               or via our{" "}
               <a href="/contact" className="text-ink underline underline-offset-2">

@@ -73,7 +73,7 @@ export function Header({ categories }: { categories: Category[] }) {
         </div>
 
         <Link href="/" className="font-serif text-2xl sm:text-[1.7rem] tracking-tight text-ink shrink-0">
-          Maldibay
+          Repute
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">

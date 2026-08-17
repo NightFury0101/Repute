@@ -24,11 +24,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Maldibay — Beauty, Considered",
-    template: "%s | Maldibay",
+    default: "Repute — Beauty, Considered",
+    template: "%s | Repute",
   },
   description:
-    "Maldibay is a premium beauty destination for makeup, skincare, haircare, fragrance and body care — thoughtfully curated, ethically sourced, made to be ritual.",
+    "Repute is a premium beauty destination for makeup, skincare, haircare, fragrance and body care — thoughtfully curated, ethically sourced, made to be ritual.",
   keywords: [
     "beauty",
     "cosmetics",
@@ -36,12 +36,12 @@ export const metadata: Metadata = {
     "makeup",
     "fragrance",
     "premium beauty",
-    "Maldibay",
+    "Repute",
   ],
   openGraph: {
     type: "website",
-    siteName: "Maldibay",
-    title: "Maldibay — Beauty, Considered",
+    siteName: "Repute",
+    title: "Repute — Beauty, Considered",
     description:
       "Premium makeup, skincare, haircare, fragrance and body care — thoughtfully curated.",
     url: siteUrl,
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Maldibay — Beauty, Considered",
+    title: "Repute — Beauty, Considered",
     description:
       "Premium makeup, skincare, haircare, fragrance and body care — thoughtfully curated.",
     images: ["/generated/og-image.jpg"],

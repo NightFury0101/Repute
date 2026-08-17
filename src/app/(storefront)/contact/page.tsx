@@ -5,11 +5,11 @@ import { ContactForm } from "@/components/contact/contact-form";
 
 export const metadata: Metadata = {
   title: "Contact Us",
-  description: "Get in touch with the Maldibay customer care team.",
+  description: "Get in touch with the Repute customer care team.",
 };
 
 const INFO = [
-  { icon: Mail, label: "Email", value: "hello@maldibay.com" },
+  { icon: Mail, label: "Email", value: "hello@repute.com" },
   { icon: Phone, label: "Phone", value: "+960 330-1234" },
   { icon: MapPin, label: "Studio", value: "Malé, Maldives" },
   { icon: Clock, label: "Hours", value: "Mon–Fri, 9am–6pm MVT" },

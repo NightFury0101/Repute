@@ -6,7 +6,7 @@ import type { ShopSearchParams } from "@/lib/shop-params";
 
 export const metadata: Metadata = {
   title: "Search",
-  description: "Search Maldibay for products, brands and categories.",
+  description: "Search Repute for products, brands and categories.",
 };
 
 export default async function SearchPage({

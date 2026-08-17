@@ -39,7 +39,7 @@ export function RegisterForm({ callbackUrl = "/account" }: { callbackUrl?: strin
       router.push("/login");
       return;
     }
-    toast.success("Welcome to Maldibay!");
+    toast.success("Welcome to Repute!");
     router.push(callbackUrl);
     router.refresh();
   }

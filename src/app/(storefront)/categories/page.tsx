@@ -6,7 +6,7 @@ import { getCategories } from "@/lib/data/categories";
 
 export const metadata: Metadata = {
   title: "Categories",
-  description: "Explore every Maldibay category — makeup, skincare, haircare, fragrance, body care and tools.",
+  description: "Explore every Repute category — makeup, skincare, haircare, fragrance, body care and tools.",
 };
 
 export default async function CategoriesPage() {

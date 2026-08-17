@@ -2,7 +2,7 @@
  * generate-images.ts
  *
  * Generates a full set of tasteful, editorial-style placeholder images for
- * Maldibay entirely programmatically: SVG scenes are composed from a small
+ * Repute entirely programmatically: SVG scenes are composed from a small
  * set of reusable helper functions (gradient backgrounds, bokeh, silhouette
  * "products", drop shadows, decorative line/arc accents) and then rasterized
  * to JPEG via sharp.
