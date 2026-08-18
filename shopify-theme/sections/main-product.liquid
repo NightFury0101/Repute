@@ -1,29 +1,54 @@
 <section class="container">
   <div class="product-layout">
     <div>
-      <div class="product-gallery-main">
-        <img
-          id="ProductMainImage"
-          src="{{ product.featured_media | image_url: width: 900 }}"
-          alt="{{ product.featured_media.alt | default: product.title }}"
-          width="900"
-          height="{{ 900 | divided_by: product.featured_media.aspect_ratio | default: 900 }}"
-        >
-      </div>
-      {%- if product.media.size > 1 -%}
-        <div class="product-gallery-thumbs">
+      {%- assign show_spin = false -%}
+      {%- if section.settings.enable_360_spin and product.media.size > 1 -%}
+        {%- assign show_spin = true -%}
+      {%- endif -%}
+
+      {%- if show_spin -%}
+        <div class="spin-viewer" data-spin-viewer aria-label="Drag to rotate {{ product.title }}" role="img">
           {%- for media in product.media -%}
             <img
-              src="{{ media | image_url: width: 150 }}"
+              src="{{ media | image_url: width: 900 }}"
               alt="{{ media.alt | default: product.title }}"
-              data-gallery-thumb
-              data-full-src="{{ media | image_url: width: 900 }}"
-              loading="lazy"
-              width="72"
-              height="72"
+              data-spin-frame="{{ forloop.index0 }}"
+              width="900"
+              height="{{ 900 | divided_by: media.aspect_ratio | default: 900 }}"
+              loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+              draggable="false"
             >
           {%- endfor -%}
+          <div class="spin-hint" data-spin-hint aria-hidden="true">
+            {% render 'icon-rotate' %}
+            <span>Drag to rotate</span>
+          </div>
         </div>
+      {%- else -%}
+        <div class="product-gallery-main">
+          <img
+            id="ProductMainImage"
+            src="{{ product.featured_media | image_url: width: 900 }}"
+            alt="{{ product.featured_media.alt | default: product.title }}"
+            width="900"
+            height="{{ 900 | divided_by: product.featured_media.aspect_ratio | default: 900 }}"
+          >
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="product-gallery-thumbs">
+            {%- for media in product.media -%}
+              <img
+                src="{{ media | image_url: width: 150 }}"
+                alt="{{ media.alt | default: product.title }}"
+                data-gallery-thumb
+                data-full-src="{{ media | image_url: width: 900 }}"
+                loading="lazy"
+                width="72"
+                height="72"
+              >
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </div>
 
@@ -107,7 +132,14 @@
 {
   "name": "Product information",
   "settings": [
-    { "type": "checkbox", "id": "show_related", "label": "Show related products", "default": true }
+    { "type": "checkbox", "id": "show_related", "label": "Show related products", "default": true },
+    {
+      "type": "checkbox",
+      "id": "enable_360_spin",
+      "label": "Enable 360° spin viewer",
+      "default": false,
+      "info": "Uses every image on the product, in upload order, as rotation frames. Needs real turntable photography (commonly 16–36 shots taken at even angle increments) — mismatched or too few photos will look like a slideshow, not a spin. Falls back to the normal gallery when a product has only one image."
+    }
   ]
 }
 {% endschema %}

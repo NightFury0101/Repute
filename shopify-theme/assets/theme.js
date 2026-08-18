@@ -212,6 +212,76 @@
     });
   }
 
+  /* ---------- Product page: 360° spin viewer ----------
+     Frames are every image on the product (data-spin-frame="0..N-1"),
+     in upload order. Horizontal drag distance maps to frame steps; one
+     "sensitivity" worth of pixels advances one frame, wrapping around. */
+  document.querySelectorAll("[data-spin-viewer]").forEach(function (viewer) {
+    var frames = Array.prototype.slice.call(viewer.querySelectorAll("[data-spin-frame]"));
+    var hint = viewer.querySelector("[data-spin-hint]");
+    var frameCount = frames.length;
+    if (frameCount < 2) return;
+
+    var current = 0;
+    var dragging = false;
+    var startX = 0;
+    var startFrame = 0;
+    var sensitivity = 6; /* px of drag per frame step */
+    var hasInteracted = false;
+
+    function showFrame(index) {
+      var normalized = ((index % frameCount) + frameCount) % frameCount;
+      if (normalized === current) return;
+      frames[current].style.opacity = 0;
+      frames[normalized].style.opacity = 1;
+      current = normalized;
+    }
+
+    function onPointerDown(e) {
+      dragging = true;
+      startX = e.clientX;
+      startFrame = current;
+      viewer.setPointerCapture(e.pointerId);
+      if (!hasInteracted) {
+        hasInteracted = true;
+        if (hint) hint.classList.add("is-hidden");
+      }
+    }
+
+    function onPointerMove(e) {
+      if (!dragging) return;
+      var deltaX = e.clientX - startX;
+      var steps = Math.round(deltaX / sensitivity);
+      showFrame(startFrame - steps);
+    }
+
+    function onPointerUp(e) {
+      dragging = false;
+      try {
+        viewer.releasePointerCapture(e.pointerId);
+      } catch (err) {
+        /* no-op: pointer capture already released */
+      }
+    }
+
+    viewer.addEventListener("pointerdown", onPointerDown);
+    viewer.addEventListener("pointermove", onPointerMove);
+    viewer.addEventListener("pointerup", onPointerUp);
+    viewer.addEventListener("pointercancel", onPointerUp);
+
+    /* Preload remaining frames after the first paints, so dragging is
+       smooth rather than popping in mid-drag. */
+    window.addEventListener("load", function () {
+      frames.forEach(function (img) {
+        var real = img.getAttribute("src");
+        if (img.getAttribute("loading") === "lazy" && real) {
+          var preload = new Image();
+          preload.src = real;
+        }
+      });
+    });
+  });
+
   /* ---------- Product page: gallery thumbnails ---------- */
   document.querySelectorAll("[data-gallery-thumb]").forEach(function (thumb) {
     thumb.addEventListener("click", function () {
