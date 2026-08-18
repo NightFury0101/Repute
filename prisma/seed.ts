@@ -2,9 +2,9 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { randomBytes } from "crypto";
 import { PrismaClient } from "../src/generated/prisma/client";
-import { PrismaBetterSqlite3 } from "@prisma/adapter-better-sqlite3";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const adapter = new PrismaBetterSqlite3({ url: process.env.DATABASE_URL ?? "file:./dev.db" });
+const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
 function slugify(input: string) {
@@ -1335,7 +1335,7 @@ async function main() {
 
     await prisma.order.create({
       data: {
-        orderNumber: `MB-DEMO-${1000 + o}`,
+        orderNumber: `RP-DEMO-${1000 + o}`,
         userId: customer.id,
         status: finalStatus,
         email: customer.email,

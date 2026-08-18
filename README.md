@@ -4,9 +4,8 @@ A full-stack, production-architected e-commerce platform for a premium cosmetics
 brand — storefront, customer accounts and a complete no-code admin dashboard, all backed by a
 real database.
 
-Built with **Next.js 16** (App Router, Turbopack), **TypeScript**, **Prisma** (SQLite by
-default, swappable to PostgreSQL/MySQL), **Auth.js (NextAuth v5)**, **Tailwind CSS v4**, and
-**Zustand**.
+Built with **Next.js 16** (App Router, Turbopack), **TypeScript**, **Prisma** with **PostgreSQL**,
+**Auth.js (NextAuth v5)**, **Tailwind CSS v4**, and **Zustand**.
 
 ## What's included
 
@@ -27,6 +26,9 @@ default, swappable to PostgreSQL/MySQL), **Auth.js (NextAuth v5)**, **Tailwind C
 
 - Node.js 20.9+ (Node 22 recommended)
 - npm
+- A PostgreSQL database — a free one from [Neon](https://neon.tech) or
+  [Prisma Postgres](https://console.prisma.io) takes about a minute to set up, or run Postgres
+  locally if you'd rather.
 
 ## Setup
 
@@ -36,6 +38,7 @@ cp .env.example .env
 ```
 
 Open `.env` and:
+- Set `DATABASE_URL` to your Postgres connection string.
 - Generate a real secret for `AUTH_SECRET`: `openssl rand -base64 32`
 - Set `ADMIN_SEED_PASSWORD` and `CUSTOMER_SEED_PASSWORD` to passwords **you** choose (8+
   characters, and the two must differ). **There is no built-in default password** — the seed
@@ -46,7 +49,7 @@ Open `.env` and:
 Then create the database and load the demo catalog:
 
 ```bash
-npx prisma migrate dev --name init   # creates dev.db and applies the schema
+npx prisma migrate dev --name init   # applies the schema to your Postgres database
 npm run db:seed                      # populates categories, brands, products, demo orders, etc.
 npm run dev
 ```
@@ -138,16 +141,23 @@ up yet. To go live, add your provider's SDK (e.g. Stripe) inside the payment ste
 `src/components/checkout/checkout-flow.tsx` and the `placeOrder` action in
 `src/lib/actions/orders.ts`, gated behind `paymentStatus`.
 
-## Switching to PostgreSQL / MySQL for production
+## Deploying
 
-The app ships on SQLite so it runs with zero external services. To move to Postgres:
+The app is a standard Next.js app with a Postgres database and no other infrastructure
+dependencies, so it deploys to any Node.js host (Vercel, Prisma Compute, Railway, Fly.io, a VPS,
+etc.). Whichever host you use:
 
-1. In `prisma/schema.prisma`, change the datasource `provider` to `"postgresql"`.
-2. Install the driver adapter: `npm install @prisma/adapter-pg pg`.
-3. In `src/lib/db.ts` and `prisma/seed.ts`, swap `PrismaBetterSqlite3` for `PrismaPg` from
-   `@prisma/adapter-pg` (same constructor shape — pass `{ connectionString: process.env.DATABASE_URL }`).
-4. Set `DATABASE_URL` to your Postgres connection string.
-5. Run `npx prisma migrate dev`.
+1. Set the same environment variables from `.env` in the host's dashboard —
+   `DATABASE_URL`, `AUTH_SECRET`, `ADMIN_SEED_EMAIL`/`ADMIN_SEED_PASSWORD`,
+   `CUSTOMER_SEED_EMAIL`/`CUSTOMER_SEED_PASSWORD`, `NEXT_PUBLIC_SITE_URL`. Leave
+   `NEXT_PUBLIC_SHOW_DEMO_HINTS` unset.
+2. Point `DATABASE_URL` at a real, reachable Postgres instance — `sitemap.xml` queries the
+   database at build time, so the build itself needs a working connection, not just runtime.
+3. Run `npx prisma migrate deploy` against that database (either as part of the build command,
+   or once manually) before the app serves traffic — this repo's own `build` script doesn't run
+   migrations automatically, so a fresh database needs this step explicitly.
+4. Run `npm run db:seed` once to load the demo catalog, or skip it and add your own products
+   through the admin dashboard.
 
 ## Image uploads
 
